@@ -22,6 +22,7 @@ public class Automaton {
 	 * Response set
 	 */
 	protected String[] R;
+
 	protected int initialState;
 	protected int[][] f;
 	protected int[][] g;
@@ -31,6 +32,9 @@ public class Automaton {
 	protected HashMap<String, Integer> rIndex;
 
 	public Automaton(String[] Q, String[] S, String[] R, String initialState) {
+		this.Q = Q;
+		this.S = S;
+		this.R = R;
 		for (int i = 0; i < Q.length; i++) {
 			qIndex.put(Q[i], i);
 		}
