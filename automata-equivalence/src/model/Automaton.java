@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Nelson Quiñones
  *
  */
-public class Automaton {
+public abstract class Automaton {
 
 	/**
 	 * States set
@@ -91,7 +91,7 @@ public class Automaton {
 	}
 	
 	
-	public boolean addResponse(String s, String q, String r) {
+	protected boolean addResponse(String s, String q, String r) {
 		boolean success = true;
 
 		int indS = getIndexStimulus(s);
@@ -108,7 +108,6 @@ public class Automaton {
 			success = false;
 		}
 		return success;
-
 	}
 	
 	public boolean addConection(String s, String qi, String qe, String r) {
@@ -137,6 +136,15 @@ public class Automaton {
 	}
 	
 	public UnionFind getMinimizedDS() {
+		UnionFind uf = new UnionFind(Q.length);
+		
+		for (int i = 0; i < Q.length; i++) {
+			for (int j = i+1; j < Q.length; j++) {
+				if(g[i].equals(g[j])) {
+					uf.union(i, j);
+				}
+			}
+		}
 		return null;
 	}
 	

@@ -1,6 +1,8 @@
+package Tests;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import model.Automaton;
+import model.*;
 
 public class Automaton_Test{
 	Automaton a1;
@@ -12,7 +14,7 @@ public class Automaton_Test{
 		String[] S = {"0","1"};
 		String iS = "C";
 		
-		a1 = new Automaton(Q,S,R,iS);
+		a1 = new MealyAutomaton(Q,S,R,iS);
 		for (int i = 0; i < 10; i++) {
 			int s = (int)(Math.random()*2);
 			int qi = (int)(Math.random()*4);
@@ -28,7 +30,7 @@ public class Automaton_Test{
 		String[] S = {"0","1"};
 		String iS = "C";
 		
-		a1 = new Automaton(Q,S,R,iS);
+		a1 = new MealyAutomaton(Q,S,R,iS);
 		for (int i = 0; i < 10; i++) {
 			int s = (int)(Math.random()*2);
 			int qi = (int)(Math.random()*4);
@@ -37,7 +39,7 @@ public class Automaton_Test{
 			System.out.println("S = "+S[s]+"  Qi = "+Q[qi]+"  Qe = "+Q[qe]+"  R = "+R[r]+"  result = "+a1.addConection(S[s], Q[qi], Q[qe],R[r]));
 		}
 		
-		a2 = new Automaton(Q,S,R,iS);
+		a2 = new MealyAutomaton(Q,S,R,iS);
 		for (int i = 0; i < 10; i++) {
 			int s = (int)(Math.random()*2);
 			int qi = (int)(Math.random()*4);
@@ -47,10 +49,27 @@ public class Automaton_Test{
 		}
 	}
 	
+	//Quiz 1
+	public void scene_3() {
+		String[] Q = {"A","B","C","D","E","F"};
+		String[] R = {"0","1"};
+		String[] S = {"0","1"};
+		String iS = "C";
+		
+		a1 = new MealyAutomaton(Q,S,R,iS);
+		for (int i = 0; i < 10; i++) {
+			int s = (int)(Math.random()*2);
+			int qi = (int)(Math.random()*4);
+			int qe = (int)(Math.random()*4);
+			int r = (int)(Math.random()*2);
+			System.out.println("S = "+S[s]+"  Qi = "+Q[qi]+"  Qe = "+Q[qe]+"  R = "+R[r]+"  result = "+a1.addConection(S[s], Q[qi], Q[qe],R[r]));
+		}
+	}
+	
     @Test
     public void checkAutomataConstruction_1(){
         scene_1();
-        int f [][] = a1.getF();
+        int f[][] = a1.getF();
         int g[][] = a1.getG();
         System.out.println("\nF");
         for (int i = 0; i < f.length; i++) {
