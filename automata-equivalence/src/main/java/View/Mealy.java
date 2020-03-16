@@ -1,6 +1,7 @@
 package main.java.View;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -45,17 +46,26 @@ public class Mealy extends Stage {
 	ArrayList<String> AlphabetStimulus;
 	ArrayList<String> AlphabetResponses;
 	
+	ArrayList<String> AlphabetStates2;
+	ArrayList<String> AlphabetStimulus2;
+	ArrayList<String> AlphabetResponses2;
+	
 	MealyController controller;
 	
 	
 	//Controlador
 	
 	
-	public Mealy(ArrayList<String> s,ArrayList<String> st, ArrayList<String> r ) {
+	public Mealy(ArrayList<String> s,ArrayList<String> st, ArrayList<String> r, ArrayList<String> s2, ArrayList<String> st2, ArrayList<String> r2 ) {
+		
 		
 		AlphabetResponses = r;
 		AlphabetStates = s;
 		AlphabetStimulus = st;
+		
+		AlphabetResponses2 = r2;
+		AlphabetStates2 = s2;
+		AlphabetStimulus2 = st2;
 		
 		instrucciones = new Label("Dado un estado inicial y un estimulo responda el estado respuesta y el simbolo de respuesta separados por comas.\n");
 		
@@ -63,13 +73,13 @@ public class Mealy extends Stage {
 		
 		automata1 = new Label("Tabla del automata 1 ");
 		automataTable1 = new TextArea();
-		insertarLA1 = new Label("Indique el estado de salida y la respuesta separados por coma \nque corresponden a la ultima fila de la tabla");
+		insertarLA1 = new Label("Indique el estado de respuesta y la respuesta separados por una coma \nque corresponden a la ultima fila de la tabla \nEj: A,1");
 		automataValues1 = new TextField();
 		insertarA1 = new Button("Insertar");
 		
 		automata2 = new Label("Tabla del automata 2 ");
 		automataTable2 = new TextArea();
-		insertarLA2 = new Label("Indique el estado de salida y la respuesta separados por coma \nque corresponden a la ultima fila de la tabla");
+		insertarLA2 = new Label("Indique el estado de respuesta y la respuesta separados por una coma \nque corresponden a la ultima fila de la tabla \nEj: A,1");
 		automataValues2 = new TextField();
 		insertarA2 = new Button("Insertar");
 		
@@ -87,6 +97,16 @@ public class Mealy extends Stage {
 		c1.getChildren().add(insertarLA1);
 		c1.getChildren().add(automataValues1);
 		c1.getChildren().add(insertarA1);
+		c1.getChildren().add(new Label());
+		c1.getChildren().add(new Label("Alfabeto de estados 1"));
+		c1.getChildren().add(new Label(Arrays.toString(AlphabetStates.toArray())));
+		c1.getChildren().add(new Label());
+		c1.getChildren().add(new Label("Alfabeto de estimulos 1"));
+		c1.getChildren().add(new Label(Arrays.toString(AlphabetStimulus.toArray())));
+		c1.getChildren().add(new Label());
+		c1.getChildren().add(new Label("Alfabeto de respuestas 1"));
+		c1.getChildren().add(new Label(Arrays.toString(AlphabetResponses.toArray())));
+		
 		
 		VBox c2 = new VBox();
 		c2.getChildren().add(automata2);
@@ -94,6 +114,14 @@ public class Mealy extends Stage {
 		c2.getChildren().add(insertarLA2);
 		c2.getChildren().add(automataValues2);
 		c2.getChildren().add(insertarA2);
+		c2.getChildren().add(new Label("Alfabeto de estados 2"));
+		c2.getChildren().add(new Label(Arrays.toString(AlphabetStates2.toArray())));
+		c2.getChildren().add(new Label());
+		c2.getChildren().add(new Label("Alfabeto de estimulos 2"));
+		c2.getChildren().add(new Label(Arrays.toString(AlphabetStimulus2.toArray())));
+		c2.getChildren().add(new Label());
+		c2.getChildren().add(new Label("Alfabeto de respuestas 2"));
+		c2.getChildren().add(new Label(Arrays.toString(AlphabetResponses2.toArray())));
 		
 		cG.getChildren().add(c1);
 		cG.getChildren().add(c2);
@@ -101,10 +129,13 @@ public class Mealy extends Stage {
 		root.getChildren().add(instrucciones);
 		root.getChildren().add(Resultado);
 		root.getChildren().add(cG);
+		root.getChildren().add(new Label());
 		root.getChildren().add(comparar);
+		root.getChildren().add(new Label());
 		root.getChildren().add(nDiccionario);
 		
-		scene = new Scene(root,700,500);
+		
+		scene = new Scene(root,800,600);
 		this.setScene(scene);
 		
 		controller = new MealyController(this);
@@ -198,6 +229,21 @@ public class Mealy extends Stage {
 
 	public MealyController getController() {
 		return controller;
+	}
+
+
+	public ArrayList<String> getAlphabetStates2() {
+		return AlphabetStates2;
+	}
+
+
+	public ArrayList<String> getAlphabetStimulus2() {
+		return AlphabetStimulus2;
+	}
+
+
+	public ArrayList<String> getAlphabetResponses2() {
+		return AlphabetResponses2;
 	}
 	
 	

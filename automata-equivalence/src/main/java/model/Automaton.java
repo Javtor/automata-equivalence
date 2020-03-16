@@ -283,6 +283,11 @@ public abstract class Automaton {
 		Q = q;
 	}
 	
+	public void setInitialState(String S) {
+		String initialS = S;
+		this.initialState = getIndexState(initialS);
+	}
+	
 	
 
 }

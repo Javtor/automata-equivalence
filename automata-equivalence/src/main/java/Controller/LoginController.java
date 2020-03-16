@@ -16,9 +16,13 @@ public class LoginController{
 
 	private Login referencia;
 	
-	ArrayList<String> AlphabetStates;
-	ArrayList<String> AlphabetStimulus;
-	ArrayList<String> AlphabetResponses;
+	ArrayList<String> AlphabetStatesA1;
+	ArrayList<String> AlphabetStimulusA1;
+	ArrayList<String> AlphabetResponsesA1;
+	
+	ArrayList<String> AlphabetStatesA2;
+	ArrayList<String> AlphabetStimulusA2;
+	ArrayList<String> AlphabetResponsesA2;
 	
 	public LoginController(Login referencia) {
 		this.referencia = referencia;
@@ -30,23 +34,41 @@ public class LoginController{
 	private void initView() {
 		referencia.getConectMealy().setOnAction(
 				(ActionEvent event) -> {
-					AlphabetResponses = new ArrayList();
-					AlphabetStimulus = new ArrayList();
-					AlphabetStates = new ArrayList();
-					boolean work1 = checkAlphabet(referencia.getEstadoTF().getText(),AlphabetStates);
-					boolean work2 = checkAlphabet(referencia.getEstimulosTF().getText(), AlphabetStimulus);
-					boolean work3 = checkAlphabet(referencia.getRespuestaTF().getText(), AlphabetResponses);
+					AlphabetResponsesA1 = new ArrayList();
+					AlphabetStimulusA1 = new ArrayList();
+					AlphabetStatesA1 = new ArrayList();
+					AlphabetResponsesA2 = new ArrayList();
+					AlphabetStimulusA2 = new ArrayList();
+					AlphabetStatesA2 = new ArrayList();
+					boolean work1 = checkAlphabet(referencia.getEstadoTF().getText(),AlphabetStatesA1);
+					boolean work2 = checkAlphabet(referencia.getEstimulosTF().getText(), AlphabetStimulusA1);
+					boolean work3 = checkAlphabet(referencia.getRespuestaTF().getText(), AlphabetResponsesA1);
+					
+					boolean work4 = checkAlphabet(referencia.getEstadoTF2().getText(),AlphabetStatesA2);
+					boolean work5 = checkAlphabet(referencia.getEstimulosTF2().getText(), AlphabetStimulusA2);
+					boolean work6 = checkAlphabet(referencia.getRespuestaTF2().getText(), AlphabetResponsesA2);
 					if(!work1){
-						showAlert("El alfabeto de estados no tiene el formato correcto");
+						showAlert("El alfabeto de estados del automata 1 no tiene el formato correcto");
 					}
 					if(!work2){
-						showAlert("El alfabeto de estimulos no tiene el formato correcto");
+						showAlert("El alfabeto de estimulos del automata 1 no tiene el formato correcto");
 					}
 					if(!work3){
-						showAlert("El alfabeto de respuestas no tiene el formato correcto");
+						showAlert("El alfabeto de respuestas del automata 1 no tiene el formato correcto");
 					}
-					if(work1 && work2 && work3) {
-						Mealy mealy = new Mealy(AlphabetStates,AlphabetStimulus,AlphabetResponses);
+					
+					if(!work4){
+						showAlert("El alfabeto de estados del automata 2 no tiene el formato correcto");
+					}
+					if(!work5){
+						showAlert("El alfabeto de estimulos del automata 2 no tiene el formato correcto");
+					}
+					if(!work6){
+						showAlert("El alfabeto de respuestas del automata 2 no tiene el formato correcto");
+					}
+					
+					if(work1 && work2 && work3 && work4 && work5 && work6) {
+						Mealy mealy = new Mealy(AlphabetStatesA1,AlphabetStimulusA1,AlphabetResponsesA1,AlphabetStatesA2,AlphabetStimulusA2,AlphabetResponsesA2);
 						mealy.show();
 						referencia.close();
 					}
@@ -54,23 +76,42 @@ public class LoginController{
 		
 		referencia.getConectMoore().setOnAction(
 				(ActionEvent event) -> {
-					AlphabetResponses = new ArrayList();
-					AlphabetStimulus = new ArrayList();
-					AlphabetStates = new ArrayList();
-					boolean work1 = checkAlphabet(referencia.getEstadoTF().getText(),AlphabetStates);
-					boolean work2 = checkAlphabet(referencia.getEstimulosTF().getText(), AlphabetStimulus);
-					boolean work3 = checkAlphabet(referencia.getRespuestaTF().getText(), AlphabetResponses);
+					AlphabetResponsesA1 = new ArrayList();
+					AlphabetStimulusA1 = new ArrayList();
+					AlphabetStatesA1 = new ArrayList();
+					AlphabetResponsesA2 = new ArrayList();
+					AlphabetStimulusA2 = new ArrayList();
+					AlphabetStatesA2 = new ArrayList();
+					
+					boolean work1 = checkAlphabet(referencia.getEstadoTF().getText(),AlphabetStatesA1);
+					boolean work2 = checkAlphabet(referencia.getEstimulosTF().getText(), AlphabetStimulusA1);
+					boolean work3 = checkAlphabet(referencia.getRespuestaTF().getText(), AlphabetResponsesA1);
+					
+					boolean work4 = checkAlphabet(referencia.getEstadoTF2().getText(),AlphabetStatesA2);
+					boolean work5 = checkAlphabet(referencia.getEstimulosTF2().getText(), AlphabetStimulusA2);
+					boolean work6 = checkAlphabet(referencia.getRespuestaTF2().getText(), AlphabetResponsesA2);
 					if(!work1){
-						showAlert("El alfabeto de estados no tiene el formato correcto");
+						showAlert("El alfabeto de estados del automata 1 no tiene el formato correcto");
 					}
 					if(!work2){
-						showAlert("El alfabeto de estimulos no tiene el formato correcto");
+						showAlert("El alfabeto de estimulos del automata 1 no tiene el formato correcto");
 					}
 					if(!work3){
-						showAlert("El alfabeto de respuestas no tiene el formato correcto");
+						showAlert("El alfabeto de respuestas del automata 1 no tiene el formato correcto");
 					}
-					if(work1 && work2 && work3) {
-						Moore moore = new Moore(AlphabetStates,AlphabetStimulus,AlphabetResponses);
+					
+					if(!work4){
+						showAlert("El alfabeto de estados del automata 2 no tiene el formato correcto");
+					}
+					if(!work5){
+						showAlert("El alfabeto de estimulos del automata 2 no tiene el formato correcto");
+					}
+					if(!work6){
+						showAlert("El alfabeto de respuestas del automata 2 no tiene el formato correcto");
+					}
+					
+					if(work1 && work2 && work3 && work4 && work5 && work6) {
+						Moore moore = new Moore(AlphabetStatesA1,AlphabetStimulusA1,AlphabetResponsesA1,AlphabetStatesA2,AlphabetStimulusA2,AlphabetResponsesA2);
 						moore.show();
 						referencia.close();
 					}

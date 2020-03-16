@@ -49,5 +49,6 @@ public class MealyAutomaton extends Automaton{
 		}
 		return success;
 	}
+	
 
 }
