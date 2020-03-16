@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import model.Automaton;
+import main.java.model.Automaton;
+
 
 public class Automaton_Test{
 	Automaton a1;

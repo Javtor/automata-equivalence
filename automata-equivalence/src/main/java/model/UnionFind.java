@@ -1,4 +1,4 @@
-package model;
+package main.java.model;
 
 /**
  * Taken from: https://github.com/nastra/algorithms-java/blob/master/src/main/java/com/nastra/datastructures/UnionFind.java
