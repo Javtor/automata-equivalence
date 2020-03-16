@@ -13,9 +13,9 @@ package main.java.model;
  */
 public class UnionFind {
 
-    private int[] parent; // id[i] = parent of i
-    private int[] size; // sz[i] = number of objects in subtree rooted at i
-    private int count; // number of components
+    public int[] parent; // id[i] = parent of i
+    public int[] size; // sz[i] = number of objects in subtree rooted at i
+    public int count; // number of components
 
     /**
      * Create an empty union find data structure with N isolated sets.

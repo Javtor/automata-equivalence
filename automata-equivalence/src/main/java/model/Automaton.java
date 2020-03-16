@@ -1,9 +1,6 @@
 package main.java.model;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 //TODO: Doc
 /**
@@ -12,7 +9,7 @@ import java.util.Map;
  * @author Nelson Quiñones
  *
  */
-public class Automaton {
+public abstract class Automaton {
 
 	/**
 	 * States set
@@ -29,7 +26,13 @@ public class Automaton {
 	
 
 	protected int initialState;
+	/**
+	 * Transitions
+	 */
 	protected int[][] f;
+	/**
+	 * Responses
+	 */
 	protected int[][] g;
 
 	protected HashMap<String, Integer> qIndex;
@@ -91,7 +94,7 @@ public class Automaton {
 	}
 	
 	
-	public boolean addResponse(String s, String q, String r) {
+	protected boolean addResponse(String s, String q, String r) {
 		boolean success = true;
 
 		int indS = getIndexStimulus(s);
@@ -108,16 +111,12 @@ public class Automaton {
 			success = false;
 		}
 		return success;
-
 	}
 	
 	public boolean addConection(String s, String qi, String qe, String r) {
 		boolean success = true;
 		boolean sResp = addResponse(s, qi, r);
 		boolean sTrans = addTransition(s, qi, qe);
-		
-		System.out.println("Resp = "+sResp);
-		System.out.println("Trans = "+sTrans);
 		
 		if( !sResp && !sTrans){
 			success = false;
@@ -130,14 +129,80 @@ public class Automaton {
 		}
 		return success;
 	}
+	
+	/**
+	 * Performs the partition refinement algorithm
+	 * @return A Disjoint Set with the partitions
+	 */
+	public UnionFind getMinimizedDS() {
+		UnionFind uf = new UnionFind(Q.length);
+		
+		for (int i = 0; i < Q.length; i++) {
+			for (int j = i+1; j < Q.length; j++) {
+				if(Arrays.equals(g[i], g[j])) {
+					uf.union(i, j);
+				}
+			}
+		}
+		
+		int[] pPrev = uf.parent;
+		boolean cont = true;
+		while(cont) {
+			UnionFind uf2 = new UnionFind(Q.length);
+			for (int i = 0; i < Q.length; i++) {
+				for (int j = i+1; j < Q.length; j++) {
+					boolean union = uf.connected(i, j);
+					for (int k = 0; k < S.length; k++) {
+						union = union && uf.connected(f[i][k], f[j][k]);
+					}
+					if(union) {
+						uf2.union(i, j);
+					}
+				}
+			}
+			uf = uf2;
+			if(Arrays.equals(uf2.parent, pPrev)) {
+				cont = false;
+			} else {
+				pPrev = uf2.parent;
+			}
+		}
+		return uf;
 
-	public Automaton minimizeAutomaton() {
-		UnionFind uf = getMinimizedDS();
-		return null;
 	}
 	
-	public UnionFind getMinimizedDS() {
-		return null;
+	public int[] getAccessibleStates() {
+		boolean visited[] = new boolean[Q.length]; 
+		  
+        LinkedList<Integer> queue = new LinkedList<Integer>(); 
+        int s = initialState;
+        visited[s]=true; 
+        queue.add(s); 
+  
+        while (queue.size() != 0) 
+        { 
+            s = queue.poll();          
+            for (int n : f[s]) 
+            { 
+                if (!visited[n]) 
+                { 
+                    visited[n] = true; 
+                    queue.add(n); 
+                } 
+            } 
+        } 
+        ArrayList<Integer> integers = new ArrayList<Integer>();
+        for (int i = 0; i < visited.length; i++) {
+			if(visited[i])
+				integers.add(i);
+		}
+        
+        int[] ret = new int[integers.size()];
+        for (int i=0; i < ret.length; i++)
+        {
+            ret[i] = integers.get(i).intValue();
+        }
+        return ret;
 	}
 	
 	//Debería tirar una excepción diciendo que no se puede hacer
@@ -182,5 +247,15 @@ public class Automaton {
 	public void setG(int[][] g) {
 		this.g = g;
 	}
+
+	public String[] getQ() {
+		return Q;
+	}
+
+	public void setQ(String[] q) {
+		Q = q;
+	}
+	
+	
 
 }
