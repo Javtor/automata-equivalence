@@ -63,13 +63,13 @@ public class Mealy extends Stage {
 		
 		automata1 = new Label("Tabla del automata 1 ");
 		automataTable1 = new TextArea();
-		insertarLA1 = new Label("Indique el estado de salida y la respuesta separados por coma");
+		insertarLA1 = new Label("Indique el estado de salida y la respuesta separados por coma \nque corresponden a la ultima fila de la tabla");
 		automataValues1 = new TextField();
 		insertarA1 = new Button("Insertar");
 		
 		automata2 = new Label("Tabla del automata 2 ");
 		automataTable2 = new TextArea();
-		insertarLA2 = new Label("Indique el estado de salida y la respuesta separados por coma");
+		insertarLA2 = new Label("Indique el estado de salida y la respuesta separados por coma \nque corresponden a la ultima fila de la tabla");
 		automataValues2 = new TextField();
 		insertarA2 = new Button("Insertar");
 		

@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import main.java.View.Login;
 import main.java.View.Mealy;
 import main.java.model.Automaton;
+import main.java.model.MealyAutomaton;
 
 public class MealyController {
 
@@ -41,6 +42,8 @@ public class MealyController {
 
 	private void initView() {
 		
+		a2 = new MealyAutomaton(toArray(states.toArray()),toArray(stimulus.toArray()),toArray(responses.toArray()),states.get(0));
+		
 		referencia.getAutomataTable1().setText("Estado Actual  -  Entrada  -  Estado Salida  -  Salida");
 		referencia.getAutomataTable2().setText("Estado Actual  -  Entrada  -  Estado Salida  -  Salida");
 		t1 = 1;
@@ -53,13 +56,26 @@ public class MealyController {
 		
 		referencia.getInsertarA1().setOnAction(
 				(ActionEvent event) -> {
-					if(correctT(referencia.getAutomataValues1())) {
-					    completeT(referencia.getAutomataValues1().getText(), referencia.getAutomataTable1());
-						if(t1+1>stimulus.size()*states.size()) {
-							Acomplete1 = true;
-							referencia.getInsertarA1().setDisable(true);
-							showAlert("Automata 1 completo!", "Genial!");
+					
+					if(correctT(referencia.getAutomataValues1()) || t1+1 > stimulus.size()*states.size()) {
+					    
+					    
+					    if(t1+1 > stimulus.size()*states.size()) {
+					    	//System.out.println(Arrays.toString(states.toArray())+ " - " +referencia.getAutomataValues1().getText());
+					    	if(states.contains(referencia.getAutomataValues1().getText())){
+					    		Acomplete1 = true;
+					    		a1 = new MealyAutomaton(toArray(states.toArray()),toArray(stimulus.toArray()),toArray(responses.toArray()),referencia.getAutomataValues1().getText());
+								referencia.getInsertarA1().setDisable(true);
+								showAlert("Automata 1 completo!", "Genial!");
+					    	}else {
+					    		showAlert("Formato de simbolo inicial incorrecto", "Error");
+					    	}
+						}else if(t1+1==stimulus.size()*states.size()) {
+							t1++;
+							completeT(referencia.getAutomataValues1().getText(), referencia.getAutomataTable1());
+							referencia.getInsertarLA1().setText("Inserte el simbolo del estado inicial");
 						}else {
+							completeT(referencia.getAutomataValues1().getText(), referencia.getAutomataTable1());
 							t1++;
 							showNextT(t1,referencia.getAutomataTable1());
 						}
@@ -71,13 +87,23 @@ public class MealyController {
 		
 		referencia.getInsertarA2().setOnAction(
 				(ActionEvent event) -> {
-					if(correctT(referencia.getAutomataValues2())) {
-					    completeT(referencia.getAutomataValues2().getText(), referencia.getAutomataTable2());
-						if(t1+1>stimulus.size()*states.size()) {
-							Acomplete2 = true;
-							referencia.getInsertarA2().setDisable(true);
-							showAlert("Automata 2 completo!", "Genial!");
+					if(correctT(referencia.getAutomataValues2()) || t2+1 > stimulus.size()*states.size()) {    
+					    
+					    if(t2+1 > stimulus.size()*states.size()) {
+					    	if(states.contains(referencia.getAutomataValues2().getText())){
+					    		Acomplete2 = true;
+					    		a2 = new MealyAutomaton(toArray(states.toArray()),toArray(stimulus.toArray()),toArray(responses.toArray()),referencia.getAutomataValues2().getText());
+								referencia.getInsertarA2().setDisable(true);
+								showAlert("Automata 2 completo!", "Genial!");
+					    	}else {
+					    		showAlert("Formato de simbolo inicial incorrecto", "Error");
+					    	}
+						}else if(t2+1==stimulus.size()*states.size()) {
+							t2++;
+							completeT(referencia.getAutomataValues2().getText(), referencia.getAutomataTable2());
+							referencia.getInsertarLA2().setText("Inserte el simbolo del estado inicial");
 						}else {
+							completeT(referencia.getAutomataValues2().getText(), referencia.getAutomataTable2());
 							t2++;
 							showNextT(t2,referencia.getAutomataTable2());
 						}
@@ -89,9 +115,9 @@ public class MealyController {
 		referencia.getComparar().setOnAction(
 				(ActionEvent event) -> {
 					if(Acomplete1 && Acomplete2) {
-						
+						showAlert("Los dos automatas son: ", "Resultado: ");
 					}else {
-						
+						showAlert("Completa los automatas", "Error");
 					}
 				});
 		
@@ -105,6 +131,14 @@ public class MealyController {
 		
 	}
 	
+	private String[] toArray(Object[] array) {
+		String out[] = new String[array.length];
+		for (int i = 0; i < out.length; i++) {
+			out[i] = (String)array[i];
+		}
+		return out;
+	}
+
 	public void showAlert(String message1, String message2) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(message2);
