@@ -74,6 +74,7 @@ public class Mealy extends Stage {
 		insertarA2 = new Button("Insertar");
 		
 		nDiccionario = new Button("Cambiar Diccionarios");
+		comparar = new Button("COMPARAR AUTOMATAS!");
 
 		
 		VBox root = new VBox();
@@ -100,6 +101,7 @@ public class Mealy extends Stage {
 		root.getChildren().add(instrucciones);
 		root.getChildren().add(Resultado);
 		root.getChildren().add(cG);
+		root.getChildren().add(comparar);
 		root.getChildren().add(nDiccionario);
 		
 		scene = new Scene(root,700,500);

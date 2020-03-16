@@ -44,7 +44,7 @@ public class Login extends Stage {
 		
 		estadoTF = new TextField("A,B,C");
 		estimulosTF = new TextField("1,0,2");
-		respuestaTF = new TextField("2,1,2");
+		respuestaTF = new TextField("2,1,3");
 		
 		instruccionesL = new Label("Por favor ingrese simbolos alfanumericos distintos de tamaño 1 que compongan los abecedarios separados por una coma \nEj: A,B,C ó 1,2,3,4 \n ");
 

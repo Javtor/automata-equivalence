@@ -46,7 +46,6 @@ public class LoginController{
 						showAlert("El alfabeto de respuestas no tiene el formato correcto");
 					}
 					if(work1 && work2 && work3) {
-						System.out.println(Arrays.toString(AlphabetResponses.toArray()));
 						Mealy mealy = new Mealy(AlphabetStates,AlphabetStimulus,AlphabetResponses);
 						mealy.show();
 						referencia.close();
