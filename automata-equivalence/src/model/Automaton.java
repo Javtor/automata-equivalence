@@ -132,12 +132,6 @@ public abstract class Automaton {
 		}
 		return success;
 	}
-
-	public Automaton minimizeAutomaton() {
-		UnionFind uf = getMinimizedDS();
-		return null;
-	}
-	
 	
 	/**
 	 * Performs the partition refinement algorithm
@@ -256,5 +250,15 @@ public abstract class Automaton {
 	public void setG(int[][] g) {
 		this.g = g;
 	}
+
+	public String[] getQ() {
+		return Q;
+	}
+
+	public void setQ(String[] q) {
+		Q = q;
+	}
+	
+	
 
 }

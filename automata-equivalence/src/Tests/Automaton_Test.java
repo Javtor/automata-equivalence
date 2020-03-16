@@ -1,5 +1,9 @@
 package Tests;
 
+import static org.junit.Assert.*;
+
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import model.*;
@@ -81,9 +85,10 @@ public class Automaton_Test{
 	}
 	
 	@Test
-	public void quiz1() {
+	public void testMinimizedDS() {
 		scene_3();
-		M.getMinimizedDS();
+		int[] minimized = M.getMinimizedDS().parent;
+		assertTrue(Arrays.equals(minimized, new int[] {0,0,2,2,2,5}));
 	}
 	
     @Test
