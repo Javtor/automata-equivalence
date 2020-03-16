@@ -1,4 +1,4 @@
-package Tests;
+
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,9 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import model.*;
+
+import main.java.model.*;
+
 
 public class Automaton_Test{
 	MealyAutomaton a1;

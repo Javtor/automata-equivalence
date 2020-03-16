@@ -1,11 +1,9 @@
-package Tests;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
-import model.*;
+import main.java.model.*;
 
 class AutomataComparatorTest {
 
