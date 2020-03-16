@@ -1,5 +1,7 @@
 package model;
 
+import java.util.HashSet;
+
 public class AutomataComparator {
 	
 	public static boolean equals(Automaton a1, Automaton a2) {
@@ -24,13 +26,34 @@ public class AutomataComparator {
 				sum.addTransition(sum.S[j], minA1[i]+"", a1.f[minA1[i]][j]+"");
 			}
 		}
-		for (int i = 0; i < minA1.length; i++) {
+		for (int i = 0; i < minA2.length; i++) {
 			for (int j = 0; j < sum.S.length; j++) {
-				sum.addResponse(sum.S[j], minA1[i]+"", a1.g[minA1[i]][j]+"");
+				sum.addResponse(sum.S[j], (minA2[i]+a1.Q.length)+"", (a2.g[minA2[i]][j]+""));
+				sum.addTransition(sum.S[j], (minA2[i]+a1.Q.length)+"", (a2.f[minA2[i]][j]+a1.Q.length)+"");
 			}
 		}
 		
-		return false;
+		//Algorithm
+		UnionFind ds = sum.getMinimizedDS();
+		int[] finalPartition = ds.parent;
+		
+		//Are the initial states connected?
+		boolean ini = ds.connected(a1.initialState, a2.initialState);
+		
+		//Checks if every block contains at least one element of each automaton
+		HashSet<Integer> blocks1 = new HashSet<Integer>();
+		for (int i = 0; i < minA1.length; i++) {
+			blocks1.add(finalPartition[i]);
+		}
+		
+		HashSet<Integer> blocks2 = new HashSet<Integer>();
+		for (int i = minA1.length; i < finalPartition.length; i++) {
+			blocks2.add(finalPartition[i]);
+		}
+		
+		boolean contains = blocks1.equals(blocks2);
+		
+		return ini && contains;
 	}
 
 }

@@ -118,9 +118,6 @@ public abstract class Automaton {
 		boolean sResp = addResponse(s, qi, r);
 		boolean sTrans = addTransition(s, qi, qe);
 		
-		System.out.println("Resp = "+sResp);
-		System.out.println("Trans = "+sTrans);
-		
 		if( !sResp && !sTrans){
 			success = false;
 		}else if(!sResp){
