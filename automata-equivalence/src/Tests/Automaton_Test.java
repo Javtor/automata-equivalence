@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import model.*;
 
 public class Automaton_Test{
-	Automaton a1;
-	Automaton a2;
+	MealyAutomaton a1;
+	MealyAutomaton a2;
+	MooreAutomaton M;
 	
 	public void scene_1() {
 		String[] Q = {"A","B","C","D","F"};
@@ -54,16 +55,35 @@ public class Automaton_Test{
 		String[] Q = {"A","B","C","D","E","F"};
 		String[] R = {"0","1"};
 		String[] S = {"0","1"};
-		String iS = "C";
+		String iS = "A";
 		
-		a1 = new MealyAutomaton(Q,S,R,iS);
-		for (int i = 0; i < 10; i++) {
-			int s = (int)(Math.random()*2);
-			int qi = (int)(Math.random()*4);
-			int qe = (int)(Math.random()*4);
-			int r = (int)(Math.random()*2);
-			System.out.println("S = "+S[s]+"  Qi = "+Q[qi]+"  Qe = "+Q[qe]+"  R = "+R[r]+"  result = "+a1.addConection(S[s], Q[qi], Q[qe],R[r]));
-		}
+		M = new MooreAutomaton(Q,S,R,iS);
+		M.addResponse("A","0");
+		M.addResponse("B","0");
+		M.addResponse("C","1");
+		M.addResponse("D","1");
+		M.addResponse("E","1");
+		M.addResponse("F","0");
+		
+		M.addTransition("0", "A", "B");
+		M.addTransition("1", "A", "C");
+		M.addTransition("0", "B", "A");
+		M.addTransition("1", "B", "D");
+		M.addTransition("0", "C", "E");
+		M.addTransition("1", "C", "F");
+		M.addTransition("0", "D", "E");
+		M.addTransition("1", "D", "F");
+		M.addTransition("0", "E", "E");
+		M.addTransition("1", "E", "F");
+		M.addTransition("0", "F", "E");
+		M.addTransition("1", "F", "F");
+		
+	}
+	
+	@Test
+	public void quiz1() {
+		scene_3();
+		M.getMinimizedDS();
 	}
 	
     @Test

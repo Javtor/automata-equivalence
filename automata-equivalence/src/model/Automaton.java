@@ -1,9 +1,6 @@
 package model;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 //TODO: Doc
 /**
@@ -29,7 +26,13 @@ public abstract class Automaton {
 	
 
 	protected int initialState;
+	/**
+	 * Transitions
+	 */
 	protected int[][] f;
+	/**
+	 * Responses
+	 */
 	protected int[][] g;
 
 	protected HashMap<String, Integer> qIndex;
@@ -135,17 +138,80 @@ public abstract class Automaton {
 		return null;
 	}
 	
+	
+	/**
+	 * Performs the partition refinement algorithm
+	 * @return A Disjoint Set with the partitions
+	 */
 	public UnionFind getMinimizedDS() {
 		UnionFind uf = new UnionFind(Q.length);
 		
 		for (int i = 0; i < Q.length; i++) {
 			for (int j = i+1; j < Q.length; j++) {
-				if(g[i].equals(g[j])) {
+				if(Arrays.equals(g[i], g[j])) {
 					uf.union(i, j);
 				}
 			}
 		}
-		return null;
+		
+		int[] pPrev = uf.parent;
+		boolean cont = true;
+		while(cont) {
+			UnionFind uf2 = new UnionFind(Q.length);
+			for (int i = 0; i < Q.length; i++) {
+				for (int j = i+1; j < Q.length; j++) {
+					boolean union = uf.connected(i, j);
+					for (int k = 0; k < S.length; k++) {
+						union = union && uf.connected(f[i][k], f[j][k]);
+					}
+					if(union) {
+						uf2.union(i, j);
+					}
+				}
+			}
+			uf = uf2;
+			if(Arrays.equals(uf2.parent, pPrev)) {
+				cont = false;
+			} else {
+				pPrev = uf2.parent;
+			}
+		}
+		return uf;
+
+	}
+	
+	public int[] getAccessibleStates() {
+		boolean visited[] = new boolean[Q.length]; 
+		  
+        LinkedList<Integer> queue = new LinkedList<Integer>(); 
+        int s = initialState;
+        visited[s]=true; 
+        queue.add(s); 
+  
+        while (queue.size() != 0) 
+        { 
+            s = queue.poll();          
+            for (int n : f[s]) 
+            { 
+                if (!visited[n]) 
+                { 
+                    visited[n] = true; 
+                    queue.add(n); 
+                } 
+            } 
+        } 
+        ArrayList<Integer> integers = new ArrayList<Integer>();
+        for (int i = 0; i < visited.length; i++) {
+			if(visited[i])
+				integers.add(i);
+		}
+        
+        int[] ret = new int[integers.size()];
+        for (int i=0; i < ret.length; i++)
+        {
+            ret[i] = integers.get(i).intValue();
+        }
+        return ret;
 	}
 	
 	//Debería tirar una excepción diciendo que no se puede hacer
