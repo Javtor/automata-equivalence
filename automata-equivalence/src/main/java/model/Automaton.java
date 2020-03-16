@@ -27,23 +27,34 @@ public abstract class Automaton {
 
 	protected int initialState;
 	/**
-	 * Transitions
+	 * Function of transitions
 	 */
 	protected int[][] f;
 	/**
-	 * Responses
+	 * Function of responses
 	 */
 	protected int[][] g;
 
+	/**
+	 * The indices for the states
+	 */
 	protected HashMap<String, Integer> qIndex;
+	/**
+	 * The indices for the stimuli
+	 */
 	protected HashMap<String, Integer> sIndex;
+	/**
+	 * The indices for the responses
+	 */
 	protected HashMap<String, Integer> rIndex;
 	
 	/**
-	 * Map to relate a state to an identificator for union F¿find
+	 * Builds the automaton
+	 * @param Q The set of states
+	 * @param S The set of stimuli
+	 * @param R The set of responses
+	 * @param initialState The initial state
 	 */
-	protected HashMap<String, Integer> identificatorIndex;
-
 	public Automaton(String[] Q, String[] S, String[] R, String initialState) {
 		this.Q = Q;
 		this.S = S;
@@ -74,6 +85,13 @@ public abstract class Automaton {
 
 	}
 
+	/**
+	 * Adds a transition to the function f
+	 * @param s The stimulus
+	 * @param qInitial The initial state
+	 * @param qEnd The ending state
+	 * @return true iff the operation was successful
+	 */
 	public boolean addTransition(String s, String qInitial, String qEnd) {
 		boolean success = true;
 
@@ -93,7 +111,13 @@ public abstract class Automaton {
 		return success;
 	}
 	
-	
+	/**
+	 * Adds a response to the function g
+	 * @param s The stimulus
+	 * @param q The state
+	 * @param r The response
+	 * @return true iff the operation was successful
+	 */
 	protected boolean addResponse(String s, String q, String r) {
 		boolean success = true;
 
@@ -156,6 +180,10 @@ public abstract class Automaton {
 
 	}
 	
+	/**
+	 * Uses bfs for finding the accessible states
+	 * @return An array with the indices of the accessible states
+	 */
 	public int[] getAccessibleStates() {
 		boolean visited[] = new boolean[Q.length]; 
 		  
@@ -190,7 +218,11 @@ public abstract class Automaton {
         return ret;
 	}
 	
-	//Debería tirar una excepción diciendo que no se puede hacer
+	/**
+	 * Finds the index of a state
+	 * @param state The name of the state
+	 * @return The index of the state
+	 */
 	public int getIndexState(String state) {	
 		if (qIndex.keySet().contains(state)) {
 			return qIndex.get(state);
@@ -199,6 +231,11 @@ public abstract class Automaton {
 		}
 	}
 
+	/**
+	 * Finds the index of a stimulus
+	 * @param state The name of the stimulus
+	 * @return The index of the stimulus
+	 */
 	public int getIndexStimulus(String stimulus) {
 		
 		if (sIndex.keySet().contains(stimulus)) {
@@ -208,6 +245,11 @@ public abstract class Automaton {
 		}
 	}
 
+	/**
+	 * Finds the index of a response
+	 * @param state The name of the response
+	 * @return The index of the response
+	 */
 	public int getIndexResponse(String response) {
 	    
 		if (rIndex.keySet().contains(response)) {

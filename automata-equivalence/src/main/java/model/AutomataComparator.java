@@ -4,6 +4,12 @@ import java.util.HashSet;
 
 public class AutomataComparator {
 	
+	/**
+	 * Finds if two automata are equivalent
+	 * @param a1 The first automaton
+	 * @param a2 The second automaton
+	 * @return true iff the two automata are equivalent
+	 */
 	public static boolean equals(Automaton a1, Automaton a2) {
 		
 		// Accessible states
